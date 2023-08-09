@@ -9,3 +9,15 @@ npm install express axios xml2js
 /public
 build.sh
 run.sh
+
+#!/bin/bash
+
+# Install API dependencies
+cd api
+npm install
+cd ..
+
+# Install web interface dependencies
+cd public
+npm install
+cd ..
