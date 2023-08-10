@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SiteMap Examiner</title>
+</head>
+<body>
+  <h1>SiteMap Examiner</h1>
+  <form id="search-form">
+    <label for="sku">Enter SKU:</label>
+    <input type="text" id="sku" name="sku">
+    <button type="submit">Search</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    const form = document.getElementById('search-form');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const sku = form.sku.value;
+      resultDiv.innerHTML = 'Searching...';
+
+      try {
+        const response = await fetch(`/api/search/${sku}`);
+        const data = await response.json();
+
+        resultDiv.innerHTML = `
+          <h2>Title: ${data.title}</h2>
+          <p>Author: ${data.author}</p>
+          <p>Price: ${data.price}</p>
+        `;
+      } catch (error) {
+        resultDiv.innerHTML = 'Product not found.';
+      }
+    });
+  </script>
+</body>
+</html>
